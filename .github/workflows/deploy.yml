@@ -1,0 +1,29 @@
+name: CI 
+
+on: [push]
+
+jobs:
+    
+  srv1:
+    if: github.ref == 'refs/heads/main'
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Push to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: cd ${{ secrets.PROJECT_PATH }} && echo ${{ secrets.SERVER_PASSWORD }} | sudo -S git pull https://${{ secrets.TOKEN }}@github.com/SinesioBittencourt-StudyGuide/HugoTest.git
+
+      - uses: actions/checkout@v1
+      - name: Build the docker-compose stack
+        run: docker-compose up -d
+     
+      - name: Sleep
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '5s'
+      - name: Check running containers
+        run: docker ps
