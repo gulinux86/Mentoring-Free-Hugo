@@ -1,0 +1,24 @@
+baseURL: http://0.0.0.0:1313
+
+languageCode: en-us
+title: "John's Blog"
+theme: "toha"
+
+# Manage languages
+# For any more details, you can check the official documentation: https://gohugo.io/content-management/multilingual/
+languages:
+  en:
+    languageName: English
+    weight: 1
+
+# At least HTML and JSON are required for the main HTML content and
+# client-side JavaScript search
+outputs:
+  home:
+  - HTML
+  - RSS
+  - JSON
+
+# Enable global emoji support
+enableEmoji: true
+
